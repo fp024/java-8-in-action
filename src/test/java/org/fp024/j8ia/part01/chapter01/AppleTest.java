@@ -1,10 +1,13 @@
 package org.fp024.j8ia.part01.chapter01;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -13,6 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 class AppleTest {
+	/**
+	 * p35. 첫 Java 8 코드
+	 */
 	@Test
 	void appleTest() {
 		List<Apple> inventory = new ArrayList<>();
@@ -42,6 +48,72 @@ class AppleTest {
 
 		logger.info("======= 정렬 후 =======");
 		inventory.forEach(apple -> logger.info("{}", apple));
+	}
+
+	/**
+	 * p49 1.2.2 코드 넘겨주기 - Java 8 이전의 방식
+	 */
+	// 녹색 사과 필터링
+	List<Apple> filterGreenApples(List<Apple> inventory) {
+		List<Apple> result = new ArrayList<>();
+		for (Apple apple : inventory) {
+			if ("green".equals(apple.getColor())) {
+				result.add(apple);
+			}
+		}
+		return result;
+	}
+
+	// 무거운 사과 필터링 (150g 이상)
+	List<Apple> filterHeavyApples(List<Apple> inventory) {
+		List<Apple> result = new ArrayList<>();
+		for (Apple apple : inventory) {
+			if (apple.getWeight() >= 150) {
+				result.add(apple);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * p49 1.2.2 코드 넘겨주기 - Java 8 에서는...
+	 * 
+	 * 검사 조건 메서드는 Apple 도메인에 내장.
+	 * 
+	 * Predicate란.. 수학에서 인스로 값을 받아 true나 false로 값을 반환하는 함수.
+	 * 
+	 */
+	// 조건에 맞는 사과 필터링
+	static List<Apple> filterApples(List<Apple> inventory, Predicate<Apple> p) {
+		List<Apple> result = new ArrayList<>();
+
+		for (Apple apple : inventory) {
+			if (p.test(apple)) {
+				result.add(apple);
+			}
+		}
+		return result;
+	}
+
+	@Test
+	void testFilterApples() {
+		List<Apple> inventory = new ArrayList<>();
+		inventory.add(Apple.builder().color("green").weight(50).build());
+		inventory.add(Apple.builder().color("red").weight(150).build());
+		inventory.add(Apple.builder().color("yellow").weight(140).build());
+		inventory.add(Apple.builder().color("green").weight(160).build());
+
+		// 이전의 방식
+		List<Apple> greenAppleList = filterGreenApples(inventory);
+		List<Apple> heavyAppleList = filterHeavyApples(inventory);
+
+		// Java 8의 방식, 검사 메서드를 static 메서드로 Apple 도메인 메서드로 넣어야함.
+		List<Apple> greenAppleListJava8 = filterApples(inventory, Apple::isGreenApple);
+		List<Apple> heavyAppleListJava8 = filterApples(inventory, Apple::isHeavyApple);
+
+		assertEquals(greenAppleListJava8, greenAppleList);
+		assertEquals(heavyAppleListJava8, heavyAppleList);
+
 	}
 
 }
