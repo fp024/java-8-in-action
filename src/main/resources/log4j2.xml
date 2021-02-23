@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configuration>
+<Configuration>
+	<!-- Appender, Layout 설정 -->
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d %5p [%c] %m%n" />
+		</Console>
+	</Appenders>
+
+	<!-- Logger 설정 -->
+	<Loggers>
+		<Logger name="org.fp024" level="DEBUG" additivity="false">
+			<AppenderRef ref="console" />
+		</Logger>
+
+		<Root level="INFO">
+			<AppenderRef ref="console" />
+		</Root>
+	</Loggers>
+</Configuration>
