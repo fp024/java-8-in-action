@@ -43,7 +43,7 @@ class ApplePredicateTest {
 
 	}
 
-	@DisplayName("익명클래스로 필터링 조건 전달")
+	@DisplayName("2.3.2 익명 클래스 사용")
 	@Test
 	void testUseAnonymousClass() {
 		List<Apple> redAndHeavyAppleResult = filterApples(appleList, new ApplePredicate() {
@@ -67,6 +67,21 @@ class ApplePredicateTest {
 		}
 		return result;
 
+	}
+
+	/**
+	 * 왜 잘 될까? ApplePredicate 에 다른 연관관계없이 평가 메서드 하나만 있는데, 잘된다.
+	 */
+	@DisplayName("2.3.3 람다 표현식 사용")
+	@Test
+	void testUseLamda() {
+
+		List<Apple> redAndHeavyAppleResult = filterApples(appleList,
+				(Apple apple) -> "red".equals(apple.getColor()) && apple.getWeight() >= 150);
+
+		assertFalse(redAndHeavyAppleResult.isEmpty());
+		redAndHeavyAppleResult.forEach(apple -> assertEquals("red", apple.getColor()));
+		redAndHeavyAppleResult.forEach(apple -> assertTrue(apple.getWeight() >= 150));
 	}
 
 	/**
