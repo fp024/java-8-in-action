@@ -1,6 +1,7 @@
 package org.fp024.j8ia.part01.chapter01;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +11,7 @@ import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
@@ -97,11 +99,7 @@ class AppleTest {
 
 	@Test
 	void testFilterApples() {
-		List<Apple> inventory = new ArrayList<>();
-		inventory.add(Apple.builder().color("green").weight(50).build());
-		inventory.add(Apple.builder().color("red").weight(150).build());
-		inventory.add(Apple.builder().color("yellow").weight(140).build());
-		inventory.add(Apple.builder().color("green").weight(160).build());
+		List<Apple> inventory = testAppleData();
 
 		// 이전의 방식
 		List<Apple> greenAppleList = filterGreenApples(inventory);
@@ -113,6 +111,37 @@ class AppleTest {
 
 		assertEquals(greenAppleListJava8, greenAppleList);
 		assertEquals(heavyAppleListJava8, heavyAppleList);
+
+	}
+
+	private List<Apple> testAppleData() {
+		List<Apple> inventory = new ArrayList<>();
+		inventory.add(Apple.builder().color("green").weight(50).build());
+		inventory.add(Apple.builder().color("red").weight(150).build());
+		inventory.add(Apple.builder().color("yellow").weight(140).build());
+		inventory.add(Apple.builder().color("green").weight(160).build());
+		return inventory;
+	}
+	
+	
+	/**
+	 * 사용할 메서드가 단순하다면 람다로 인라인 전달이 나음.
+	 * 그러나 조금 더 복잡한 수행을 한다면 메서드를 정의하고 메서드 레퍼런스를 정의하는 것이 낫다.
+	 */
+	@DisplayName("p51 1.2.3 메서드 전달에서 람다로")
+	@Test
+	void testLamda() {
+		List<Apple> inventory = testAppleData();
+		
+		List<Apple> greenAppleList = filterApples(inventory, (Apple a) -> "green".equals(a.getColor()));
+		assertEquals("green", greenAppleList.get(0).getColor());
+		
+		List<Apple> heavyAppleList = filterApples(inventory, (Apple a) -> a.getWeight() >= 150);
+		assertTrue(heavyAppleList.get(0).getWeight()>= 150);
+		
+		List<Apple> greenAndHeavyAppleList = filterApples(inventory, (Apple a) -> a.getWeight() >= 150 && "green".equals(a.getColor()));
+		assertEquals("green", greenAndHeavyAppleList.get(0).getColor());
+		assertTrue(greenAndHeavyAppleList.get(0).getWeight()>= 150);
 
 	}
 
