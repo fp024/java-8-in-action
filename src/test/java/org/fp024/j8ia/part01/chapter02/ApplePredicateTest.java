@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,14 +42,20 @@ class ApplePredicateTest {
 		redAndHeavyAppleResult.forEach(apple -> assertTrue(apple.getWeight() >= 150));
 
 	}
-	
-	
+
+	@DisplayName("익명클래스로 필터링 조건 전달")
 	@Test
 	void testUseAnonymousClass() {
-		
+		List<Apple> redAndHeavyAppleResult = filterApples(appleList, new ApplePredicate() {
+			@Override
+			public boolean test(Apple apple) {
+				return "red".equals(apple.getColor()) && apple.getWeight() >= 150;
+			}
+		});
+		assertFalse(redAndHeavyAppleResult.isEmpty());
+		redAndHeavyAppleResult.forEach(apple -> assertEquals("red", apple.getColor()));
+		redAndHeavyAppleResult.forEach(apple -> assertTrue(apple.getWeight() >= 150));
 	}
-	
-	
 
 	static List<Apple> filterApples(List<Apple> inventory, ApplePredicate p) {
 		List<Apple> result = new ArrayList<>();
@@ -96,10 +103,40 @@ class ApplePredicateTest {
 		}
 	}
 
+	@DisplayName("퀴즈 2-1 실행")
 	@Test
 	void testPrettyPrintApple() {
 		prettyPrintApple(appleList, new AppleOnelineFormatter());
 		prettyPrintApple(appleList, new AppleMultilineFormatter());
+	}
+
+	/**
+	 * p76. 퀴즈 2-2 익명 클래스 문제
+	 * 
+	 * ==> Runnable의 맴버를 this로 봐서 5가 될 것 같다. ==> 실행시 5로 나옴..
+	 */
+	class MeaningOfThis {
+		public final int value = 4;
+
+		public void doIt() {
+			int value = 6;
+			Runnable r = new Runnable() {
+				private final Logger logger = LoggerFactory.getLogger(Runnable.class);
+				public final int value = 5;
+
+				@Override
+				public void run() {
+					logger.info("퀴즈 정답: {}", this.value);
+				}
+			};
+			r.run();
+		}
+	}
+
+	@DisplayName("퀴즈 2-2 실행")
+	@Test
+	void runQuiz2_2() {
+		new MeaningOfThis().doIt();
 	}
 
 }
