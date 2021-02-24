@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 /**
  * 2.2 동작 파라미터화
  */
-
 class ApplePredicateTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplePredicateTest.class);
 
@@ -42,6 +41,14 @@ class ApplePredicateTest {
 		redAndHeavyAppleResult.forEach(apple -> assertTrue(apple.getWeight() >= 150));
 
 	}
+	
+	
+	@Test
+	void testUseAnonymousClass() {
+		
+	}
+	
+	
 
 	static List<Apple> filterApples(List<Apple> inventory, ApplePredicate p) {
 		List<Apple> result = new ArrayList<>();
