@@ -9,6 +9,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -122,26 +124,37 @@ class AppleTest {
 		inventory.add(Apple.builder().color("green").weight(160).build());
 		return inventory;
 	}
-	
-	
+
 	/**
-	 * 사용할 메서드가 단순하다면 람다로 인라인 전달이 나음.
-	 * 그러나 조금 더 복잡한 수행을 한다면 메서드를 정의하고 메서드 레퍼런스를 정의하는 것이 낫다.
+	 * 사용할 메서드가 단순하다면 람다로 인라인 전달이 나음. 그러나 조금 더 복잡한 수행을 한다면 메서드를 정의하고 메서드 레퍼런스를 정의하는
+	 * 것이 낫다.
 	 */
 	@DisplayName("p51 1.2.3 메서드 전달에서 람다로")
 	@Test
 	void testLamda() {
 		List<Apple> inventory = testAppleData();
-		
+
 		List<Apple> greenAppleList = filterApples(inventory, (Apple a) -> "green".equals(a.getColor()));
 		assertEquals("green", greenAppleList.get(0).getColor());
-		
+
 		List<Apple> heavyAppleList = filterApples(inventory, (Apple a) -> a.getWeight() >= 150);
-		assertTrue(heavyAppleList.get(0).getWeight()>= 150);
-		
-		List<Apple> greenAndHeavyAppleList = filterApples(inventory, (Apple a) -> a.getWeight() >= 150 && "green".equals(a.getColor()));
+		assertTrue(heavyAppleList.get(0).getWeight() >= 150);
+
+		List<Apple> greenAndHeavyAppleList = filterApples(inventory,
+				(Apple a) -> a.getWeight() >= 150 && "green".equals(a.getColor()));
 		assertEquals("green", greenAndHeavyAppleList.get(0).getColor());
-		assertTrue(greenAndHeavyAppleList.get(0).getWeight()>= 150);
+		assertTrue(greenAndHeavyAppleList.get(0).getWeight() >= 150);
+
+		// 스트림으로 필터링해서 다시 리스트로 모아서 반환
+		List<Apple> greenAndHeavyAppleListWithStream = greenAndHeavyAppleList.stream()
+				.filter((Apple a) -> a.getWeight() >= 150 && "green".equals(a.getColor())).collect(Collectors.toList());
+		assertEquals(greenAndHeavyAppleListWithStream, greenAndHeavyAppleList);
+		
+		// 병렬 수행
+		List<Apple> greenAndHeavyAppleListWithParallelStream = greenAndHeavyAppleList.parallelStream()
+				.filter((Apple a) -> a.getWeight() >= 150 && "green".equals(a.getColor())).collect(Collectors.toList());
+		assertEquals(greenAndHeavyAppleListWithParallelStream, greenAndHeavyAppleListWithStream);
+		
 
 	}
 
