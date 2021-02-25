@@ -31,6 +31,6 @@ class FunctionalInterfaceTest {
 	}
 
 	private void process(Runnable r) {
-		new Thread(r).start();
+		r.run();
 	}
 }
