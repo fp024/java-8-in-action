@@ -1,4 +1,4 @@
-package org.fp024.j9ia.part01.chapter03;
+package org.fp024.j8ia.part01.chapter03;
 
 import org.junit.jupiter.api.Test;
 
