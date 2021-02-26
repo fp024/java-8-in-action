@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -62,6 +63,32 @@ class AroundPatternTest {
 	static String processFile(BufferedReaderProcessor p) throws IOException {
 		try (BufferedReader br = new BufferedReader(new FileReader(new File(sharedTempDir.toFile(), "data.txt")))) {
 			return p.process(br);
+		}
+	}
+	
+	/**
+	 * p102.
+	 * 
+	 * Java 8 에서 기본 제공하는 Function 인터페이스는 Checked 예외를 허용하지 않는다. Checked 예외를 잡아서 런타임
+	 * 부류 예외로 바꿔줘야함.
+	 * 
+	 * @throws IOException // 이건.. Function 내부의 구현 메서드 예외가 아니고 processFile에서 FileReader 관련이다.
+	 */
+	@Test
+	void testFunctionInterface() throws IOException {
+		Function<BufferedReader, String> func = (BufferedReader b) -> {
+			try {
+				return b.readLine();
+			} catch (IOException e) { // apply() 메서드 정의가 Checked 예외를 허용하지 않아 런타임 예외로 전환함.
+				throw new IllegalStateException(e);
+			}
+		};
+		assertEquals("Java", processFileUseJavaFunction(func));
+	}
+
+	static String processFileUseJavaFunction(Function<BufferedReader, String> p) throws IOException {
+		try (BufferedReader br = new BufferedReader(new FileReader(new File(sharedTempDir.toFile(), "data.txt")))) {
+			return p.apply(br);
 		}
 	}
 
