@@ -1,7 +1,5 @@
 package org.fp024.j8ia.part01.chapter03;
 
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -21,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
 /**
- * 3.6.2 생성자 레퍼런스
+ * 3.6.2 생성자 레퍼런스 그리고 퀴즈 3-7
  */
 class ConstructorReferenceTest {
 
@@ -62,14 +60,13 @@ class ConstructorReferenceTest {
 
 		assertTrue(new ReflectionEquals(c2.apply("green", 150)).matches(c1.apply("green", 150)));
 	}
-	
+
 	static Map<String, Function<Integer, Fruit>> map = new HashMap<>();
 	static {
 		map.put("apple", Apple::new);
 		map.put("orange", Orange::new);
 	}
 
-	
 	static Fruit giveMeFruit(String fruit, Integer weight) {
 		return map.get(fruit.toLowerCase()).apply(weight);
 	}
@@ -78,20 +75,27 @@ class ConstructorReferenceTest {
 	@Test
 	void testGiveMeFruit() {
 		Fruit apple = giveMeFruit("Apple", 150);
-		
+
 		Fruit orange = giveMeFruit("oRaNgE", 100);
-		
+
 		assertSame(apple.getClass(), Apple.class);
 		assertEquals(150, apple.getWeight());
-		
+
 		assertSame(orange.getClass(), Orange.class);
 		assertEquals(100, orange.getWeight());
-	}	
-	
+	}
 
-	
-	
-	
-	
-	
+	/**
+	 * 퀴즈 3-7 Color(int, int, int) 처럼 인수가 3개인 생성자의 생성자 레퍼런스를 사용하려면?
+	 * 
+	 * ==> 직접 함수형 인터페이스를 정의해야함.
+	 */
+	@Test
+	void testTriFunction() {
+		TriFunction<Integer, Integer, Integer, Color> func1 = (r, g, b) -> new Color(r, g, b);
+		TriFunction<Integer, Integer, Integer, Color> func2 = Color::new;
+		
+		assertEquals(func1.apply(240, 240, 240), func2.apply(240, 240, 240));
+	}
+
 }
