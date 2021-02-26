@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
  * 퀴즈 3-4 함수형 인터 페이스 처음 생각했을 대... 좀 어려운 문제같았음.
  */
 @Slf4j
-class Quiz4Of3FunctionInterfaceTest {
+class Quiz4FunctionInterfaceTest {
 	/*
 	 * 1. T-> R ==> Function<T, R>
 	 */
