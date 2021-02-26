@@ -3,6 +3,7 @@ package org.fp024.j8ia.part01.chapter03;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,7 +19,6 @@ import java.util.function.Supplier;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
-import org.unitils.reflectionassert.ReflectionAssert;
 
 /**
  * 3.6.2 생성자 레퍼런스
@@ -46,11 +46,7 @@ class ConstructorReferenceTest {
 
 		List<Apple> expect = Arrays.asList(new Apple(7), new Apple(3), new Apple(4), new Apple(10));
 
-		// Apple에 equals가 필드기준으로 재정의 되지 않으면 테스트가 안됨...
-		// assertIterableEquals(expect, actual); // JUnit 5 기본 내장이긴한데...
-		// Unitils 로 사용. 간편하게 비교가능하다., 그런데 버전업이 2017년 이후로 안되고 있는점은...
-		// 또다른 문제는 Junit 4.11 디펜던시가 걸린다.
-		ReflectionAssert.assertReflectionEquals(expect, actual);
+		assertIterableEquals(expect, actual);
 	}
 
 	static List<Apple> map(List<Integer> list, Function<Integer, Apple> func) {
@@ -64,7 +60,7 @@ class ConstructorReferenceTest {
 		BiFunction<String, Integer, Apple> c1 = Apple::new;
 		BiFunction<String, Integer, Apple> c2 = (String s, Integer i) -> new Apple(s, i);
 
-		ReflectionAssert.assertReflectionEquals(c2.apply("green", 150), c1.apply("green", 150));
+		assertTrue(new ReflectionEquals(c2.apply("green", 150)).matches(c1.apply("green", 150)));
 	}
 	
 	static Map<String, Function<Integer, Fruit>> map = new HashMap<>();
@@ -89,7 +85,7 @@ class ConstructorReferenceTest {
 		assertEquals(150, apple.getWeight());
 		
 		assertSame(orange.getClass(), Orange.class);
-		assertEquals(110, orange.getWeight());
+		assertEquals(100, orange.getWeight());
 	}	
 	
 
