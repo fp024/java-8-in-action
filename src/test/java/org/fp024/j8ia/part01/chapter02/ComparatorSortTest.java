@@ -3,8 +3,6 @@ package org.fp024.j8ia.part01.chapter02;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,10 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 class ComparatorSortTest {
-	private final List<Apple> appleList = Collections.unmodifiableList(Arrays.asList(
-			Apple.builder().color("green").weight(100).build(), Apple.builder().color("red").weight(160).build(),
-			Apple.builder().color("green").weight(150).build(), Apple.builder().color("yellow").weight(80).build(),
-			Apple.builder().color("white").weight(180).build(), Apple.builder().color("red").weight(140).build()));
+	private final List<Apple> appleList = AppleRepository.getAppleList();
 
 	@Test
 	void testComparator() {

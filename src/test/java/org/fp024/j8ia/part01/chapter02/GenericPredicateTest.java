@@ -19,10 +19,7 @@ import org.junit.jupiter.api.Test;
  * 
  */
 class GenericPredicateTest {
-	private final List<Apple> appleList = Arrays.asList(Apple.builder().color("green").weight(100).build(),
-			Apple.builder().color("red").weight(160).build(), Apple.builder().color("green").weight(150).build(),
-			Apple.builder().color("yellow").weight(80).build(), Apple.builder().color("white").weight(180).build(),
-			Apple.builder().color("red").weight(140).build());
+	private final List<Apple> appleList = AppleRepository.getAppleList();
 
 	private final List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 

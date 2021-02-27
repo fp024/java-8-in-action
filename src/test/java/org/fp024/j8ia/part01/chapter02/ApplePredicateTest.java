@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -19,10 +18,7 @@ import org.slf4j.LoggerFactory;
 class ApplePredicateTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplePredicateTest.class);
 
-	private final List<Apple> appleList = Arrays.asList(Apple.builder().color("green").weight(100).build(),
-			Apple.builder().color("red").weight(160).build(), Apple.builder().color("green").weight(150).build(),
-			Apple.builder().color("yellow").weight(80).build(), Apple.builder().color("white").weight(180).build(),
-			Apple.builder().color("red").weight(140).build());
+	private final List<Apple> appleList = AppleRepository.getAppleList();
 
 	@Test
 	void test() {
