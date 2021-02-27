@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
- * 3.7 람다, 메서드 레퍼런스 활용하기!
+ * p115. 3.7 람다, 메서드 레퍼런스 활용하기!
  * 
  * 목표: inventory.sort(comparing(Apple::getWeight))
  */

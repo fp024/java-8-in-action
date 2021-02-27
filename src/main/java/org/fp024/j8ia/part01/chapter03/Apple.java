@@ -20,6 +20,12 @@ public class Apple implements Fruit {
 		this.weight = weight;
 	}
 
+	public Apple(String color, Integer weight) {
+		this.color = color;
+		this.weight = weight;
+	}
+
 	private String color;
 	private Integer weight;
+	private String country;
 }
