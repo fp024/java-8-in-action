@@ -7,6 +7,9 @@ import java.util.List;
  * 4장 - 스트림 소개 테스트용
  */
 public class MyDishRepository {
+	private MyDishRepository() {
+		// 유틸리티 클래스 객체 생성 방지
+	}
 	public static List<MyDish> getDishList() {
 		return Arrays.asList(
 				MyDish.builder().name("나가사끼 짬뽕").calories(500).build()
