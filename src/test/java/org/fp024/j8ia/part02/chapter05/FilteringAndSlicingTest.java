@@ -7,9 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Arrays;
 import java.util.List;
 
-import org.fp024.j8ia.part02.chapter04.Dish;
-import org.fp024.j8ia.part02.chapter04.Dish.Type;
-import org.fp024.j8ia.part02.chapter04.DishRepository;
+import org.fp024.j8ia.part02.chapter05.Dish.Type;
 import org.junit.jupiter.api.Test;
 
 /**
