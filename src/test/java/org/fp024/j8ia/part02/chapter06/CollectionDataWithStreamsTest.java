@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 class CollectionDataWithStreamsTest {
-
 	private List<Transaction> transactions = TransactionRepository.getTransaction();
 	
 	/**
@@ -52,6 +51,10 @@ class CollectionDataWithStreamsTest {
 		Map<Currency, List<Transaction>> streamTransactionsByCurrencies  
 			= transactions.stream().collect(Collectors.groupingBy(Transaction::getCurrency));
 
+		// Currency,Transaction레파지토리에서 
+		// 한번 만든 객체를 사용해서 
+		// Currency와 Transaction 도메인에 
+		// Equals & HashCode를 오버라이드 하지 않아도 않더라도 참으로 평가된다.
 		assertEquals(legacyTransactionsByCurrencies, streamTransactionsByCurrencies);
 	}
 

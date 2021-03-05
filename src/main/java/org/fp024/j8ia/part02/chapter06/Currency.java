@@ -7,8 +7,7 @@ import lombok.ToString;
 
 /**
  * 통화
- * 
- * 맵의 키로 쓰일 수 있어서, Equals & HashCode를 구현하자.
+ *
  */
 @Getter
 @Builder
