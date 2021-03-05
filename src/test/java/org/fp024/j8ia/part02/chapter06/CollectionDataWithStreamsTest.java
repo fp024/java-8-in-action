@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 6장. 스트림으로 데이터 수집
  * 
- * 전장에서 언급한 Transaction 과 비슷하게 사용은 하는데, Currency를 도메인으로 받았음.
+ * 이전 장에서 언급한 Transaction 과 비슷하게 사용은 하는데, Currency를 도메인으로 받았음.
  */
 @Slf4j
 class CollectionDataWithStreamsTest {
