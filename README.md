@@ -1,4 +1,4 @@
-## Java 8 in Action
+## Java 8 in Action 스터디
 * 저자: Raoul-Gabriel Urma, Mario Fusco, Alan Mycroft
 * yes24 도서 판매 링크 (2021년 현시점 품절 상태)
     * www.yes24.com/Product/Goods/17252419
