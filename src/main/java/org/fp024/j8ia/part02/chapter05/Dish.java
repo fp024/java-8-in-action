@@ -9,7 +9,6 @@ import lombok.ToString;
  */
 @Getter
 @AllArgsConstructor
-@ToString(of = { "name" })
 public class Dish {
 	private final String name;
 	private final boolean vegetarian;
@@ -18,5 +17,10 @@ public class Dish {
 
 	public enum Type {
 		MEAT, FISH, OTHER
+	}
+
+	@Override
+	public String toString() {
+		return this.name;
 	}
 }
