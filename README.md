@@ -11,3 +11,9 @@
     
 ### 의견
 * 퀴즈 정답을 제공해주는 것은 아주 좋은데,<br>정답을 부록에 몰아서 보여주면 좋을 것 같습니다.<br>바로 아래 답이 있어서, 자꾸 풀기도 전에 답이보이네요 ㅠㅠ
+
+* AdoptJDK 1.8.0_282 에서 테스트시 컴파일 오류가 납니다. String으로 넘겨줘야 정상동작합니다.<br>
+	* 컴파일 오류
+	`The method collect(Collector<? super Dish,A,R>) in the type Stream<Dish> is not applicable for the arguments (Collector<CharSequence,capture#15-of ?,String>)` 	
+	* 대상 코드
+	`menu.stream().collect(joining());`
