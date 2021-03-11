@@ -3,7 +3,6 @@ package org.fp024.j8ia.part02.chapter07;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.util.function.Function;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
@@ -90,31 +89,15 @@ class ParallelStreamsTest {
 	 */
 	@Test
 	void testMeasuringStreamPerformance() {
-		logger.info("순차 스트림: sequentialSum: {} msecs", measureSumPerf(ParallelStreamsTest::sequentialSum, 10_000_000));
-		logger.info("전통 자바 반복: iterativeSum: {} msecs", measureSumPerf(ParallelStreamsTest::iterativeSum, 10_000_000));
-		logger.info("병렬 스트림: parallelSum: {} msecs", measureSumPerf(ParallelStreamsTest::parallelSum, 10_000_000));
-		logger.info("LongStream ranged 스트림: rangedSum: {} msecs", measureSumPerf(ParallelStreamsTest::rangedSum, 10_000_000));
-		logger.info("LongStream ranged 병렬 스트림: rangedSum: {} msecs", measureSumPerf(ParallelStreamsTest::parallelRangedSum, 10_000_000));
+		logger.info("순차 스트림: sequentialSum: {} msecs", PerformanceTestingUtils.measureSumPerf(ParallelStreamsTest::sequentialSum, 10_000_000));
+		logger.info("전통 자바 반복: iterativeSum: {} msecs", PerformanceTestingUtils.measureSumPerf(ParallelStreamsTest::iterativeSum, 10_000_000));
+		logger.info("병렬 스트림: parallelSum: {} msecs", PerformanceTestingUtils.measureSumPerf(ParallelStreamsTest::parallelSum, 10_000_000));
+		logger.info("LongStream ranged 스트림: rangedSum: {} msecs", PerformanceTestingUtils.measureSumPerf(ParallelStreamsTest::rangedSum, 10_000_000));
+		logger.info("LongStream ranged 병렬 스트림: rangedSum: {} msecs", PerformanceTestingUtils.measureSumPerf(ParallelStreamsTest::parallelRangedSum, 10_000_000));
 	}
 	
 	
-	/**
-	 * n개의 숫자를 더하는 함수의 성능 측정 메서드
-	 */
-	long measureSumPerf(Function<Long, Long> adder, long n) {
-		long fastest = Long.MAX_VALUE;
 
-		for (int i = 0; i < 10; i++) {
-			long start = System.nanoTime();
-			long sum = adder.apply(n);
-			long duration = (System.nanoTime() - start) / 1_000_000;
-			logger.info("Result: {}", sum);
-			if (duration < fastest) {
-				fastest = duration;
-			}
-		}
-		return fastest;
-	}
 	
 	
 	static long rangedSum(long n) {
@@ -138,8 +121,8 @@ class ParallelStreamsTest {
 	 */
 	@Test
 	void testUsingParallelStreamsCorrectly() {
-		logger.info("사이드이펙트 합계 순차 실행: sequentialSum: {} msecs", measureSumPerf(ParallelStreamsTest::sideEffectSum, 10_000_000));
-		logger.info("사이드이펙트 합계 병렬 실행: iterativeSum: {} msecs", measureSumPerf(ParallelStreamsTest::sideEffectParallelSum, 10_000_000));
+		logger.info("사이드이펙트 합계 순차 실행: sequentialSum: {} msecs", PerformanceTestingUtils.measureSumPerf(ParallelStreamsTest::sideEffectSum, 10_000_000));
+		logger.info("사이드이펙트 합계 병렬 실행: iterativeSum: {} msecs", PerformanceTestingUtils.measureSumPerf(ParallelStreamsTest::sideEffectParallelSum, 10_000_000));
 	}
 	
 	static long sideEffectSum(long n) {
