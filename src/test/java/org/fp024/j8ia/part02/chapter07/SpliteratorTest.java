@@ -2,8 +2,10 @@ package org.fp024.j8ia.part02.chapter07;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Spliterator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,13 +27,21 @@ class SpliteratorTest {
 	@Test
 	void testImplementingYourOwnSpliterator() {
 		assertEquals(19, countWordsIteratively(SENTENCE));
-		assertEquals(19, countWords(convertStringToCharacterStream(SENTENCE)));
-		
+		assertEquals(19, countWords(convertStringToCharacterStream(SENTENCE)));	
 		// 병렬 실행시 문제가 있는 상황
-		assertEquals(19, countWords(convertStringToCharacterStream(SENTENCE).parallel()));
+		// assertEquals(19, countWords(convertStringToCharacterStream(SENTENCE).parallel()));
 	}
-	
-	
+		
+	/**
+	 * WordCounterSpliterator 활용
+	 */
+	@Test
+	void testWordCounterSpliterator() {
+		Spliterator<Character> spliterator = new WordCounterSpliterator(SENTENCE);
+		Stream<Character> stream = StreamSupport.stream(spliterator, true);
+		assertEquals(19, countWords(stream));
+	}
+
 	Stream<Character> convertStringToCharacterStream(String string) {
 		return IntStream.range(0, string.length()).mapToObj(string::charAt);
 	}
