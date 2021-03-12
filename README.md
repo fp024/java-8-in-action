@@ -20,6 +20,10 @@
 	```
     * 대상 코드
     	* `menu.stream().collect(joining());`
+* 265쪽 코드
+    * `logger.isLoggable(Log.FINER) -> logger.isLoggable(Level.FINER)`
+	* 레벨 지정 부분이 잘못된 것 같습니다.
+    	* JRE의 logging.properties에 ConsoleHandler의 기본 로그레벨이 INFO이기 때문에, 해당 로그레벨을 FINER 이하로 낮춰야 메시지가 노출될거라는 것에 대해서도 간단히 언급되면 좋을 것 같습니다.
 
 
 ### 정오표
