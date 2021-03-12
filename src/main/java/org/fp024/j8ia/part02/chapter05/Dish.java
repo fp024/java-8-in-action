@@ -1,5 +1,7 @@
 package org.fp024.j8ia.part02.chapter05;
 
+import org.fp024.j8ia.part02.chapter06.CaloricLevel;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -22,5 +24,18 @@ public class Dish {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+	
+	/**
+	 * 8장 8.1.3절에서 사용한다.
+	 */
+	public CaloricLevel getCaloricLevel() {
+		if (getCalories() <= 400) {
+			return CaloricLevel.DIET;
+		} else if (getCalories() <= 700) {
+			return CaloricLevel.NORMAL;
+		} else {
+			return CaloricLevel.FAT;
+		}
 	}
 }
