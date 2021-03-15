@@ -102,5 +102,4 @@ class LambdaTestingTest {
 		}
 		return result;
 	}
-
 }
