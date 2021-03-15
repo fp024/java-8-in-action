@@ -1,37 +1,29 @@
 package org.fp024.j8ia.part03.chapter08;
 
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingInt;
+import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import org.fp024.j8ia.part02.chapter05.Dish;
 import org.fp024.j8ia.part02.chapter05.DishRepository;
 import org.fp024.j8ia.part02.chapter06.CaloricLevel;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.slf4j.LoggerFactory;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -282,11 +274,4 @@ class RefactoringForImprovedReadabilityAndFlexibilityTest {
 	interface BufferedReaderProcessor {
 		String process(BufferedReader b) throws IOException;
 	}
-	
-	
-	
-	
-	
-	
-	
 }

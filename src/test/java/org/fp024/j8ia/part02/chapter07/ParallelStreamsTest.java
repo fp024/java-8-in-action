@@ -2,6 +2,7 @@ package org.fp024.j8ia.part02.chapter07;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -65,7 +66,7 @@ class ParallelStreamsTest {
 		
 		// 위에 환경 변수를 명시적으로 설정하지 않았으면... 아래와 같은 코드를 사용하여 프로세서 수를 설정한다.
 		// 32스레드 시스템에서 실행했을 때... (AdoptOpenJDK 1.8.0_282)
-		assertEquals(31, Runtime.getRuntime().availableProcessors() - 1);
+		assertTrue(Runtime.getRuntime().availableProcessors() >= 1);
 	}
 	
 	/**
