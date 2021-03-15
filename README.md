@@ -24,6 +24,8 @@
     * `logger.isLoggable(Log.FINER) -> logger.isLoggable(Level.FINER)`
 	* 레벨 지정 부분이 잘못된 것 같습니다.
     	* JRE의 logging.properties에 ConsoleHandler의 기본 로그레벨이 INFO이기 때문에, 해당 로그레벨을 FINER 이하로 낮춰야 메시지가 노출될거라는 것에 대해서도 간단히 언급되면 좋을 것 같습니다.
+* 280쪽 문구
+    * 따로 테스트가 실패했다는 말이없고, 빨리 넘어간 느낌이라, Object의 기본 구현 때문에 List<Point>의 동등비교가 실패함을 약간 부연설명을 더해주는게 좋을 것 같습니다.
 
 
 ### 정오표
