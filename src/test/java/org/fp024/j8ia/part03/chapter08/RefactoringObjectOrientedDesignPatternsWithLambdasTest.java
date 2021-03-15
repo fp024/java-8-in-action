@@ -147,9 +147,5 @@ class RefactoringObjectOrientedDesignPatternsWithLambdasTest {
 		Product p2 = ProductFactoryLambdas.createProduct("stock");
 		assertEquals("주식", p2.getName());
 	}
-	
-	@Test
-	void testFail() {
-		fail();
-	}
+
 }
