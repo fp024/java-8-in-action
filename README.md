@@ -21,13 +21,22 @@
     * 대상 코드
     	* `menu.stream().collect(joining());`
 * 265쪽 코드
-    * `logger.isLoggable(Log.FINER) -> logger.isLoggable(Level.FINER)`
+    * `logger.isLoggable(Log.FINER) ==> logger.isLoggable(Level.FINER)`
 	* 레벨 지정 부분이 잘못된 것 같습니다.
     	* JRE의 logging.properties에 ConsoleHandler의 기본 로그레벨이 INFO이기 때문에, 해당 로그레벨을 FINER 이하로 낮춰야 메시지가 노출될거라는 것에 대해서도 간단히 언급되면 좋을 것 같습니다.
 * 280쪽 문구
     * 따로 테스트가 실패했다는 말이없고, 빨리 넘어간 느낌이라, Object의 기본 구현 때문에 List<Point>의 동등비교가 실패함을 약간 부연설명을 더해주는게 좋을 것 같습니다.
 
+* 304쪽 퀴즈
+    * A 인터페이스의 hello() default메서드를 D클래스에서 오버라이드하는데, 오버라이드한 메서드의 접근 지정자가 public이 되어야할 것 같습니다.
+        * `void hello () { ==> public void hello () {`
+        * 인터페이스의 모든 메서드는 public 접근 수준을 가지고 있는데, 그부분을 빼고 오버라이드 하였기 때문에 컴파일 오류가 발생합니다.
+            `Cannot reduce the visibility of the inherited method from A`
+        * 306쪽의 C클래스 내부의 hello() 도 접근지정자가 public 이어야 합니다.
 
 ### 정오표
 * 230쪽 그림 7-1
     * 스트림에 들어있는 값이 모두 3으로 나타납니다. 1,2,3,4 그리고, 5,6,7,8 이 되어야합니다.
+* 299쪽 
+    * 파라미터로 넘어온 변수명이 잘못기입되어있습니다.
+        * `getRotationAngle() + angle ==> getRotationAngle() + angleInDegrees`
