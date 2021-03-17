@@ -34,6 +34,61 @@
             `Cannot reduce the visibility of the inherited method from A`
         * 306쪽의 C클래스 내부의 hello() 도 접근지정자가 public 이어야 합니다.
 
+* 323쪽 flatMap 활용 부분, 예제 10-5
+    flatMap의 함수형 전달 코드 블록의 리턴값은 NonNull을 요구 하기 때문에, (Adpot OpenJDK 1.8 285 코드 봤을 때..)
+    예제 10-4 에 정의된 Person, Car를 그대로 사용할 수 없습니다.
+    해당 도메인들은 Optional<Car> car, Optional<Insurance> insurance가 null이 될 수 있기 때문에,
+    null 인 상태로 flatMap을 사용시 함수형 전달 코드 블럭의 getCar()가
+    반환하는 값이 null이 되어 NPE오류가 발생합니다.
+
+    * Optional map의 반환 부분 JDK구현
+        `return Optional.ofNullable(mapper.apply(value));`
+    * Optional flatMap의 반환 부분 JDK구현
+        `return Objects.requireNonNull(mapper.apply(value));`
+
+    * 기존 도메인 코드
+    ```java
+    class Person {
+        private Optional<Car> car;
+
+        public Optional<Car> getCar() {
+            return car;
+        }
+    }
+
+    class Car {
+        private Optional<Insurance> insurance;
+
+        public Optional<Insurance> getInsurance() {
+            return insurance;
+        }
+    }
+
+    // ....
+    ```
+
+    * 수정 도메인 코드 (Optional 결과가 절대 null을 반환하지 않도록 수정)
+    ```java
+    class Person {
+        private Car car;
+
+        public Optional<Car> getCar() {
+            return Optional.ofNullable(car);
+        }
+    }
+
+    static class Car {
+        private Insurance insurance;
+
+        public Optional<Insurance> getInsurance() {
+            return Optional.ofNullable(insurance);
+        }
+    }
+    // ....
+    ```
+
+
+
 ### 정오표
 * 230쪽 그림 7-1
     * 스트림에 들어있는 값이 모두 3으로 나타납니다. 1,2,3,4 그리고, 5,6,7,8 이 되어야합니다.
