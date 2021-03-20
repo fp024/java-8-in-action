@@ -50,13 +50,26 @@ class EtcTest {
 	 * >>> code = '"-".join(str(n) for n in range(100))'
 	 * >>> print(timeit.timeit(code, number=10000))
 	 * 0.15640659999999684
+	 * 
+	 * 반복의 수가 1만번일 때는 병렬수행을 해도 for-loop보다 빠르지 않지만.
+	 * 
+	 * 반복의 수 100만번으로 늘리고, 100만번 반복 부분을 parallel을 붙여 병렬 수행해서
+	 * 병렬 스트림으로 실행시 For-Loop보다 3배 가까이 빨라진다.
+	 * 
+	 *   1 나노초는 1e-9 (0이 9개)
 	 */
 	
 	@Test
 	void testJoinString() {
-		logger.info("joinStream: {}", benchmark(() -> joinStream(10000)));
-		logger.info("joinPyConStream: {}", benchmark(() -> joinPyConStream(10000)));
-		logger.info("joinPyConForLoop: {}", benchmark(() -> joinPyConForLoop(10000)));
+		assertEquals("1-2-3-4",
+				IntStream.range(1, 5)
+					.mapToObj(Integer::toString)
+					.collect(Collectors.joining("-"))
+		);
+
+		logger.info("joinStream: {}", benchmark(() -> joinStream(1_000_000)));
+		logger.info("joinPyConStream: {}", benchmark(() -> joinPyConStream(1_000_000)));
+		logger.info("joinPyConForLoop: {}", benchmark(() -> joinPyConForLoop(1_000_000)));
 	}
 
 	double benchmark(Runnable r) {
@@ -67,7 +80,7 @@ class EtcTest {
 	}
 
 	void joinStream(int num) {
-		IntStream.range(0, num).forEach(i ->
+		IntStream.range(0, num).parallel().forEach(i ->
 			IntStream.range(1, 100)
 				.mapToObj(Integer::toString)
 				.collect(Collectors.joining("-"))
