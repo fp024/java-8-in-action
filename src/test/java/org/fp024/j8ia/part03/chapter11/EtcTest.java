@@ -61,13 +61,14 @@ class EtcTest {
 	
 	@Test
 	void testJoinString() {
-		assertEquals("1-2-3-4",
-				IntStream.range(1, 5)
+		assertEquals("0-1-2-3-4",
+				IntStream.range(0, 5)
 					.mapToObj(Integer::toString)
 					.collect(Collectors.joining("-"))
 		);
 
 		logger.info("joinStream: {}", benchmark(() -> joinStream(1_000_000)));
+		logger.info("joinParallelStream: {}", benchmark(() -> joinParallelStream(1_000_000)));
 		logger.info("joinPyConStream: {}", benchmark(() -> joinPyConStream(1_000_000)));
 		logger.info("joinPyConForLoop: {}", benchmark(() -> joinPyConForLoop(1_000_000)));
 	}
@@ -80,8 +81,16 @@ class EtcTest {
 	}
 
 	void joinStream(int num) {
+		IntStream.range(0, num).forEach(i ->
+			IntStream.range(0, 100)
+				.mapToObj(Integer::toString)
+				.collect(Collectors.joining("-"))
+		);
+	}
+	
+	void joinParallelStream(int num) {
 		IntStream.range(0, num).parallel().forEach(i ->
-			IntStream.range(1, 100)
+			IntStream.range(0, 100)
 				.mapToObj(Integer::toString)
 				.collect(Collectors.joining("-"))
 		);
