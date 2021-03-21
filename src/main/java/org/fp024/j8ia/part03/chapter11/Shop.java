@@ -24,10 +24,15 @@ class Shop {
 	}
 	
 	private double calculatePrice(String product) {
-		delay();
+		// delay();
+		delayAllwaysThrowException();
 		return random.nextDouble() * product.charAt(0) + product.charAt(1);
 	}
 
+	private static void delayAllwaysThrowException() {
+		throw new IllegalStateException("product not available");
+	}
+	
 	private static void delay() {
 		try {
 			Thread.sleep(1000L);
@@ -51,23 +56,25 @@ class Shop {
 			 * According to its JavaDoc:
 			 * If ThreadDeath is caught by a method, it is important that it be rethrown so that the thread actually dies.
 			 */
-			Thread.currentThread().interrupt();
+			//Thread.currentThread().interrupt();
+			throw new IllegalStateException(e);
 		}
 	}
 	
 	
 	// getPriceAsync 메서드 구현
 	public Future<Double> getPriceAsync(String product) {
-		CompletableFuture<Double> futurePrice = new CompletableFuture<>(); // 계산 결과를 포함할 CompletableFuture를 생성
+		CompletableFuture<Double> futurePrice = new CompletableFuture<>();
 		new Thread(() -> {
-			
-			double price = calculatePrice(product); // 다른 스레드에서 비동기 적으로 계산을 수행함.
-			
-			futurePrice.complete(price); // 오래 시간이 걸리는 계산이 완료되면 Future에 값을 설정한다.
-			
+			try {
+				double price = calculatePrice(product); 
+				futurePrice.complete(price); // 계산이 정상적으로 종료되면 Future에 가격정보를 저장한 채로 Future를 종료함.
+			} catch (Exception ex) {
+				futurePrice.completeExceptionally(ex); // 도중에 문제가 발생하면 에러를 포함시켜 Tuture를 종료함.
+			}
 		}).start();
 		
-		return futurePrice; // 계산결과가 완료되지 않길 기다리지 않고 Future 반환
+		return futurePrice;
 	}
 	
 	

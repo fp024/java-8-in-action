@@ -98,6 +98,7 @@ class FeaturesTest {
 	/**
 	 * 11.2 비동기 API 구현
 	 * 11.2.1 동기 메서드를 비동기 메서드로 반환
+	 * 11.2.2 에러 처리방법
 	 */
 	@Test
 	void testConvertingASynchronousMehtodIntoAnAsynchronousOne() {
@@ -112,14 +113,13 @@ class FeaturesTest {
 		
 		logger.info("Invocation returned after {} msecs", invocationTime);
 		
-		
 		doSomethingElse();
 		
 		try {
-			double price = futurePrice.get(); // 가격 정보가 있으면 Future에서 가격정보를 읽고, 가격정보가 없으면 가격정보를 받을 때까지 블록한다.
+			double price = futurePrice.get();
 			logger.info(String.format("Price is %.2f%n", price));
 		} catch (Exception e) {
-			throw new IllegalStateException();
+			throw new IllegalStateException(e);
 		}
 		
 		long retrievalTime = ((System.nanoTime() - start) / 1_000_000);
