@@ -24,13 +24,8 @@ class Shop {
 	}
 	
 	private double calculatePrice(String product) {
-		// delay();
-		delayAllwaysThrowException();
+		delay();
 		return random.nextDouble() * product.charAt(0) + product.charAt(1);
-	}
-
-	private static void delayAllwaysThrowException() {
-		throw new IllegalStateException("product not available");
 	}
 	
 	private static void delay() {
@@ -64,17 +59,21 @@ class Shop {
 	
 	// getPriceAsync 메서드 구현
 	public Future<Double> getPriceAsync(String product) {
+		/*
 		CompletableFuture<Double> futurePrice = new CompletableFuture<>();
 		new Thread(() -> {
 			try {
-				double price = calculatePrice(product); 
-				futurePrice.complete(price); // 계산이 정상적으로 종료되면 Future에 가격정보를 저장한 채로 Future를 종료함.
+				double price = ; 
+				futurePrice.complete(price);
 			} catch (Exception ex) {
-				futurePrice.completeExceptionally(ex); // 도중에 문제가 발생하면 에러를 포함시켜 Tuture를 종료함.
+				futurePrice.completeExceptionally(ex);
 			}
 		}).start();
 		
 		return futurePrice;
+		*/
+		// 펙토리 메서드 supplyAsync로 CompletableFuture 만들기
+		return CompletableFuture.supplyAsync(() -> calculatePrice(product));
 	}
 	
 	
