@@ -151,7 +151,7 @@ class FeaturesTest {
 		// 
 		// Done in 4033.0 msecs
 		//
-		long duration = benchmark(()-> logger.info("{}", findPrices("myPhone27S")));
+		long duration = Util.benchmark(()-> logger.info("{}", findPrices("myPhone27S")));
 		logger.info("Done in {} msecs", duration);
 	}
 
@@ -161,25 +161,19 @@ class FeaturesTest {
 		// 기본 제공 함수 parallelStream() 사용시
 		// Done in 1029.0 msecs  수행시간이 하나의 작업시간 만큼 줄었음.
 		//
-		long duration = benchmark(()-> logger.info("{}", findPricesWithParallelStream("myPhone27S")));
+		long duration = Util.benchmark(()-> logger.info("{}", findPricesWithParallelStream("myPhone27S")));
 		logger.info("Done in {} msecs", duration);
 	}
 	
-	// 마이크로초 이하 소수점은 절삭
-	long benchmark(Runnable r) {
-		long start = System.nanoTime();
-		r.run();
-		long duration = (System.nanoTime() - start) / 1_000_000;
-		return duration;
-	}
+
 	
 	private final List<Shop> shops = Collections.unmodifiableList(Arrays.asList(
 			new Shop("BestPrice")
 		  , new Shop("LetsSaveBing")
 		  , new Shop("MyFavoriteShop")
-		  , new Shop("BuyItAll")
-		  
+		  , new Shop("BuyItAll")		  
 		  , new Shop("ShopEasy")// 11.3.3 부터 상점 추가
+		  /*
 		  , new Shop("06-Shop") //  16코어 32스레드 시스템에서는 
 		  , new Shop("07-Shop") //  상점을 스레드+1 만큼은 만들어야 저자님과 
 		  , new Shop("08-Shop") //  동일한 환경이 만들어진다.
@@ -210,7 +204,7 @@ class FeaturesTest {
 		  , new Shop("33-Shop") // 
 		  , new Shop("34-Shop") //
 		  , new Shop("35-Shop") // ""
-		  
+		  */
 	));
 	
 	
@@ -241,11 +235,11 @@ class FeaturesTest {
 		// 			32스레드 동시 수행가능 시스템에서 32개 상점까지는 1초가 된다.
 		//			33개 부터 2초였다.
 		//
-		long duration = benchmark(()-> logger.info("{}", findPricesWithCompletableFuture("myPhone27S")));
+		long duration = Util.benchmark(()-> logger.info("{}", findPricesWithCompletableFuture("myPhone27S")));
 		logger.info("Done in {} msecs", duration);
 		
 		// 같은 Shop 인스턴스의 calculatePrice() 메서드 속에 nextDoulbe 호출이 있기 때문에 첫번째 호출과 값이 달라진다.
-		duration = benchmark(()-> logger.info("{}", findPricesWithCompletableFutureWrongUse("myPhone27S")));
+		duration = Util.benchmark(()-> logger.info("{}", findPricesWithCompletableFutureWrongUse("myPhone27S")));
 		logger.info("(하나의 스트림, 잘못된 사용) Done in {} msecs", duration);	
 	}
 	
@@ -311,13 +305,14 @@ class FeaturesTest {
 	/**
 	 * 11.3.4 커스텀 Executor 사용하기
 	 * 
-	 * 	스레드 풀을 사용하면 400개 까지 상점이 늘어나도 1초를 조금 넘는 수준을 유지한다.
+	 * 	스레드 풀을 사용하면 스레드풀 수 이내까지 상점이 늘어나도 1초를 조금 넘는 수준을 유지한다.
+	 *  (100개 설정했으면 100깨까진 1초를 보장하는 듯)
 	 * 
 	 * ==> 애플리케이션의 특성이 맞는 Executor를 만들어 CompletableFuture를 활용하는 것이 올바르다.
 	 */
 	@Test
 	void testUsingACustomExecutor() {
-		long duration = benchmark(()-> logger.info("{}", findPricesWithCompletableFutureWithThreadPool("myPhone27S")));
+		long duration = Util.benchmark(()-> logger.info("{}", findPricesWithCompletableFutureWithThreadPool("myPhone27S")));
 		logger.info("Done in {} msecs", duration);
 	}
 	
