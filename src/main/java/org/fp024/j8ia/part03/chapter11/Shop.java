@@ -24,6 +24,9 @@ class Shop {
 		this.random = new Random(name.charAt(0) * name.charAt(1) * name.charAt(2) * 1L);
 	}
 	
+	/**
+	 * 저자님은 제품의 가격은 유로화로 간주하고 있음.
+	 */
 	double getPrice(String product) {
 		return calculatePrice(product);
 	}
@@ -42,7 +45,8 @@ class Shop {
 	}
 	
 	private double calculatePrice(String product) {
-		Util.delay();
+		// Util.delay();
+		Util.randomDelay(); // 11.5.1 테스트 부터는 제일 빨리 처리되는 것을 확인하기도 하여 random 지연 에뮬에이션이 필요.
 		return random.nextDouble() * product.charAt(0) + product.charAt(1);
 	}
 
@@ -91,7 +95,8 @@ class Discount {
 	
 	/** 할인율을 적용할 때, 지연 에뮬레이션 */
 	private static double apply(double price, Code code) {
-		Util.delay();
+		// Util.delay();
+		Util.randomDelay(); // 11.5.1 테스트 부터는 제일 빨리 처리되는 것을 확인하기도 하여 random 지연 에뮬에이션이 필요.
 		return Util.format(price * (100 - code.percentage) / 100);
 	}
 	
@@ -156,7 +161,8 @@ class Util {
 			 */
 			// Thread.currentThread().interrupt();
 			throw new IllegalStateException(e);
-		}
+		}	
+		
 	}
 	
 	// 마이크로초 이하 소수점은 절삭
@@ -164,6 +170,20 @@ class Util {
 		long start = System.nanoTime();
 		r.run();
 		return (System.nanoTime() - start) / 1_000_000;
+	}
+	
+	/**
+	 * 0.5 초에서 2.5초 사이의 임의 지연 흉내내기
+	 */
+	private static final Random random = new Random();
+	
+	static void randomDelay() {
+		int delay = 500 + random.nextInt(2000);
+		try {
+			Thread.sleep(delay);
+		} catch (InterruptedException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 	
 }
