@@ -20,13 +20,16 @@
 	```
     * 대상 코드
     	* `menu.stream().collect(joining());`
+    
 * 265쪽 코드
     * `logger.isLoggable(Log.FINER) ==> logger.isLoggable(Level.FINER)`
 	* 레벨 지정 부분이 잘못된 것 같습니다.
     	* JRE의 logging.properties에 ConsoleHandler의 기본 로그레벨이 INFO이기 때문에, 해당 로그레벨을 FINER 이하로 낮춰야 메시지가 노출될거라는 것에 대해서도 간단히 언급되면 좋을 것 같습니다.
+    
 * 280쪽 문구
-    * 따로 테스트가 실패했다는 말이없고, 빨리 넘어간 느낌이라, Object의 기본 구현 때문에 List<Point>의 동등비교가 실패함을 약간 부연설명을 더해주는게 좋을 것 같습니다.
-
+    
+* 따로 테스트가 실패했다는 말이없고, 빨리 넘어간 느낌이라, Object의 기본 구현 때문에 List<Point>의 동등비교가 실패함을 약간 부연설명을 더해주는게 좋을 것 같습니다.
+    
 * 304쪽 퀴즈
     * A 인터페이스의 hello() default메서드를 D클래스에서 오버라이드하는데, 오버라이드한 메서드의 접근 지정자가 public이 되어야할 것 같습니다.
         * `void hello () { ==> public void hello () {`
@@ -86,12 +89,36 @@
     }
     // ....
     ```
+    
+* 379쪽 표 12-3  TemporalAdjusters 의 정적 팩토리 메서드 중, `lastDayOfNextMonth` 란 메서드는 없음.
 
+    * 집필시점에는 해당 메서드가 있었을지는 모르겠는데, Oracle JDK8, AdoptOpenJDK8 모두 해당 메서드가 없습니다.
+    * Oracle JDK 8 TemporalAdjusters API 명세
+        * https://docs.oracle.com/javase/8/docs/api/java/time/temporal/TemporalAdjusters.html
 
+* 385쪽 ZoneId를 이용해서 LocalDateTime을 Instant로 바꾸는 방법에서 LocalDateTime의 toInstant 사용관련
+
+  ```java
+  LocalDateTime dateTime = LocalDateTime.of(2014, Month.MARCH, 18, 13, 45);
+  Instant instantFromDateTime = dateTime.toInstant(romeZone);
+  // romeZone의 완전한 코드는 없으나 앞쪽의 내용으로 봐서는 ZoneId 타입인데..
+  // LocalDateTime의 toInstant 메서드는 ZoneOffset 타입을 전달 인자로 받음.
+  ```
+
+  
 
 ### 정오표
 * 230쪽 그림 7-1
-    * 스트림에 들어있는 값이 모두 3으로 나타납니다. 1,2,3,4 그리고, 5,6,7,8 이 되어야합니다.
+    * 스트림에 들어있는 값이 모두 3으로 나타납니다. 1, 2, 3, 4 그리고 5, 6, 7, 8 이 되어야합니다.
 * 299쪽 
     * 파라미터로 넘어온 변수명이 잘못기입되어있습니다.
         * `getRotationAngle() + angle ==> getRotationAngle() + angleInDegrees`
+* 377 쪽 예제 12-7
+    * date2에 대한 예상 값이 잘못되었습니다.
+        * 2014-03-18 ===>  2014-03-25
+
+* 383쪽 예제 12-11
+  * 4번째 줄에 date.format() 이 아니라 date1.format()이 되야할 것 같습니다.
+
+* 386쪽
+  * 4개의 클래가 -> 4개의 클래스가
