@@ -31,7 +31,7 @@ class WorkingWithDiffenentTimeZonesAndCalendarsTest {
 	@Test
 	void testZoneId() {
 		logger.info("\n{}", ZoneId.getAvailableZoneIds().toString().replace(", ", "\n\t"));
-
+		
 		// 윈도우 로케일에 맞춰진 것 같다.
 		ZoneId zoneId = TimeZone.getDefault().toZoneId();
 		assertEquals("Asia/Seoul", zoneId.getId());
