@@ -14,6 +14,19 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 class EtcTest {
+	
+	@Test
+	void testStringAppend() {
+		// 괄호 속 정수 연산이 먼저 수행되어 정수 7로 먼저 계산된 후.
+		// 문자열 연결이 실행되어 "2+5=7"이라는 문자열이됩니다.
+		assertEquals("2+5=7", "2+5=" + (2 + 5));
+		// 괄호로 연산자 우선순위를 바꾸지 않았기 때문에, 왼쪽부터 문자열 연결이 실행되어 문자열 "12"가되고,
+		assertEquals("12", "" + 1 + 2);
+		// 정수끼리의 덧셈 연산이 되어 정수 3 입니다.
+		assertEquals(3, +1 + 2);
+	}
+
+
 	/**
 	 * Java 스터디 카페에서 asList로 만든 List가 불변이냐라는 질문이
 	 * 올라와서 테스트 돌려봄.
