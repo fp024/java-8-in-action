@@ -24,14 +24,17 @@ x와 y라는 두 인수를 받는 함수 f를 한개의 인수를 받는 g라는
 
 ## 14.2 영속 자료구조
 함수형에서 말하는 영속은 불변성을 의미함, DB에 프로그램 종료후에도 남아있음을 의미하는 영속과는 다름.
+  
 
 ### 14.2.1 파괴적인 갱신과 함수형
+* FunctionsEverywhereTest의 testSideEffectLink(), testNoSideEffectAppend() 참고
 
 ### 14.2.2 트리를 사용한 다른 예제
+* FunctionsEverywhereTest의 testTreeUpdate(), testTreeFuncUpdate() 참고
 
 ### 14.2.3 함수형 접근법 사용
-
-
+* 영속
+	* 저장된 값이 누군가에의해 영향받지 않는 상태
 
 ## 14.3 스트림과 게으른 평가
 
