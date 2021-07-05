@@ -31,6 +31,7 @@ class FunctionsEverywhereTest {
 
     /**
      * 변환 패턴으로 나타냄.
+     * 
      *
      * @param x 변환하려는 값
      * @param f 변환 요소
