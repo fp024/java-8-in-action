@@ -13,6 +13,12 @@ import org.junit.jupiter.api.Test;
 /**
  * Scanner의 동작을 테스트 해보기 위해서,
  * System.in에 ByteArrayInputStream을 넣어서 테스트
+ * 
+ * 직접 Scanner에다 ByteArrayInputStream을 넣어서 해도 되긴하지만...
+ * Scanner를 쓰는 외부 클래스의 메서드를 테스트 할 때는, 
+ * 이렇게 System.setIn()에 ByteArrayInputStream을 설정해서 
+ * 사용할 수도 있습니다.
+ * 
  */
 class ScannerTest {
 	/**
@@ -42,6 +48,7 @@ class ScannerTest {
 				  + "BBB" + System.lineSeparator()
 			   	  + "CCC" + System.lineSeparator()
 				).getBytes());
+		System.setIn(inputStream);
 		
 		if (System.lineSeparator().length() == 2) {
 			assertEquals(19, inputStream.available(), "스캐너 처리전에 개행포함 19바이트.");
@@ -49,7 +56,7 @@ class ScannerTest {
 			assertEquals(14, inputStream.available(), "스캐너가 처리전에 개행 포함 14바이트, Unix환경이면 개행이 \\n이여서 1바이트 크기임.");
 		}
 		
-		Scanner scanner = new Scanner(inputStream);
+		Scanner scanner = new Scanner(System.in);
 		
     
 		// 
